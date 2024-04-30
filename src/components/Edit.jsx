@@ -60,7 +60,7 @@ const Edit = () => {
           })
           .then((data) => {
             console.log("articolo", data);
-            setObj("articolo");
+            setObj("article");
             setPost(data);
             console.log("oggetto", obj);
             console.log("titolo", data.title.rendered);
@@ -77,7 +77,7 @@ const Edit = () => {
           })
           .then((data) => {
             console.log("pagine", data);
-            setObj("pagina");
+            setObj("page");
             console.log("oggetto", obj);
             setPost(data);
             console.log("titolo", data.title.rendered);
