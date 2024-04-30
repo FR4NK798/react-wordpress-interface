@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/dist';
 import { baseApiUrl } from '../constants';
+import { baseApiPage } from "../constants.js";
 import { Link } from "react-router-dom/dist";
 // import Edit from './Edit'
 
@@ -9,14 +10,25 @@ const PostDetails = () => {
 
     const { id } = useParams();
 
-    useEffect(() => {
-        fetch(`${baseApiUrl}/posts/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setPost(data);
-            });
-    }, [id]);
+    // fetch articolo
+    // useEffect(() => {
+    //     fetch(`${baseApiUrl}/posts/${id}`)
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             console.log(data);
+    //             setPost(data);
+    //         });
+    // }, [id]);
+
+// fetch pagina
+useEffect(() => {
+    fetch(`${baseApiPage}/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            setPost(data);
+        });
+}, [id]);
 
     return (
         post && (

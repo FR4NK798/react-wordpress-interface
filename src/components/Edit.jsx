@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import { baseApiUrl } from "../constants.js";
 import { authString } from "../constants.js";
+import { baseApiPage } from "../constants.js";
 
 import { useParams } from "react-router-dom/dist";
 
@@ -14,8 +15,8 @@ const Edit = () => {
 
   const { id } = useParams();
 
+//   modifica articolo
   const modify = (e) => {
-    // if (setNewTitle !== "" && newContent !== "") {
     e.preventDefault();
     fetch(`${baseApiUrl}/posts/${id}`, {
       method: "PUT",
@@ -30,23 +31,23 @@ const Edit = () => {
       }),
     });
   };
-  console.log(id);
 
+
+//   fetch articolo
   useEffect(() => {
     fetch(`${baseApiUrl}/posts/${id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setPost(data);
+        setNewTitle(data.title.rendered);
+        setNewContent(data.content.rendered)
       });
     console.log("setPost", post);
-    // console.log("id", id)
   }, []);
 
   if(post){
-    console.log("post", post);
-    console.log("post title", post.title.rendered)
-    console.log("post content", post.content.rendered)
+
     return (
         <>
           <Form onSubmit={modify}>
@@ -55,7 +56,7 @@ const Edit = () => {
               <Form.Control
                 type="text"
                 placeholder="Inserisci qui il titolo"
-                value={post.title.rendered}
+                value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
                 required
               />
@@ -66,8 +67,11 @@ const Edit = () => {
               <Form.Control
                 type="text"
                 placeholder="Inserisci qui il testo del contenuto"
-                value={post.content.rendered}
-                onChange={(e) => setNewContent(e.target.value)}
+                value={newContent}
+                onChange={(e) => {
+                    setNewContent(e.target.value);
+                }
+            }
                 required
               />
             </Form.Group>
