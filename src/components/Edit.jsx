@@ -13,78 +13,124 @@ const Edit = () => {
 
   const [post, setPost] = useState(null);
 
+  const [obj, setObj] = useState(null);
+
   const { id } = useParams();
 
-//   modifica articolo
+  //   modifica articolo
   const modify = (e) => {
     e.preventDefault();
-    fetch(`${baseApiUrl}/posts/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Basic ${authString}`,
-      },
-      body: JSON.stringify({
-        title: newTitle,
-        content: newContent,
-        status: "publish",
-      }),
-    });
+    if (obj === "article") {
+      fetch(`${baseApiUrl}/posts/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${authString}`,
+        },
+        body: JSON.stringify({
+          title: newTitle,
+          content: newContent,
+          status: "publish",
+        }),
+      });
+    } else {
+      fetch(`${baseApiPage}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${authString}`,
+        },
+        body: JSON.stringify({
+          title: newTitle,
+          content: newContent,
+          status: "publish",
+        }),
+      });
+    }
   };
 
-
-//   fetch articolo
+  const fetchObj = async (e) => {
+    try {
+      let response = await fetch(`${baseApiUrl}/posts/${id}`);
+      if (response.ok) {
+        console.log(response);
+        fetch(response.url)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log("articolo", data);
+            setObj("articolo");
+            setPost(data);
+            console.log("oggetto", obj);
+            console.log("titolo", data.title.rendered);
+            console.log("content", data.content.rendered);
+            setNewTitle(data.title.rendered)
+            setNewContent(data.content.rendered)
+          });
+      } else {
+        let response = await fetch(`${baseApiPage}/${id}`);
+        console.log(response);
+        fetch(response.url)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log("pagine", data);
+            setObj("pagina");
+            console.log("oggetto", obj);
+            setPost(data);
+            console.log("titolo", data.title.rendered);
+            console.log("content", data.content.rendered);
+            setNewTitle(data.title.rendered)
+            setNewContent(data.content.rendered)
+          });
+      }
+    } catch (error) {
+      //   alert(error);
+    }
+  };
   useEffect(() => {
-    fetch(`${baseApiUrl}/posts/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setPost(data);
-        setNewTitle(data.title.rendered);
-        setNewContent(data.content.rendered)
-      });
-    console.log("setPost", post);
-  }, []);
+    fetchObj();
+    // setNewTitle(post.title.rendered);
+    // setNewContent(post.content.rendered);
+    // console.log('newTitle', newTitle)
+    // console.log('newContent', newContent)
+  }, [obj]);
 
-  if(post){
-
+  if (post) {
     return (
-        <>
-          <Form onSubmit={modify}>
-            <Form.Group className="mb-2">
-              <Form.Label>Nuovo titolo</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Inserisci qui il titolo"
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-                required
-              />
-            </Form.Group>
-    
-            <Form.Group className="mb-2">
-              <Form.Label>Contenuto</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Inserisci qui il testo del contenuto"
-                value={newContent}
-                onChange={(e) => {
-                    setNewContent(e.target.value);
-                }
-            }
-                required
-              />
-            </Form.Group>
-    
-            <Button variant="primary" type="submit">
-              Invia
-            </Button>
-          </Form>
-        </>
-      );
+      <>
+        <Form onSubmit={modify}>
+          <Form.Group className="mb-2">
+            <Form.Label>Nuovo titolo</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Inserisci qui il titolo"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-2">
+            <Form.Label>Contenuto</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Inserisci qui il testo del contenuto"
+              value={newContent}
+              onChange={(e) => setNewContent(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Button variant="primary" type="submit">
+            Invia
+          </Button>
+        </Form>
+      </>
+    );
   }
-
-
 };
 
 export default Edit;
