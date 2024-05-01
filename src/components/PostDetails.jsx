@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom/dist";
 import { baseApiUrl } from "../constants";
 import { baseApiPage } from "../constants.js";
 import { Link } from "react-router-dom/dist";
-// import Edit from './Edit'
+import Container from 'react-bootstrap/Container'
 
 const PostDetails = () => {
   const [post, setPost] = useState(null);
@@ -60,26 +60,14 @@ const PostDetails = () => {
     fetchObj();
   }, [id]);
 
-  // return (
-  //     post && (
-  //         <>
-  //             <h1>{post.title.rendered}</h1>
-  //             {/* categories */}
-  //             {/* author */}
-  //             <div
-  //                 dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-  //             ></div>
 
-  //         </>
-  //     )
-  // );
 
   if (post) {
     return (
-      <>
+      <Container>
         <h1>{newTitle}</h1>
         <div dangerouslySetInnerHTML={{ __html: newContent }}></div>
-      </>
+      </Container>
     );
   }
 };
