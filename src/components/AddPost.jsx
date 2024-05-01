@@ -6,6 +6,7 @@ import { authString } from "../constants.js";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
+import Container from "react-bootstrap/Container";
 
 const AddPost = () => {
   const [newTitle, setNewTitle] = useState("");
@@ -46,9 +47,9 @@ const AddPost = () => {
   };
 
   return (
-    <>
+    <Container>
       <Form onSubmit={addFromForm}>
-        <Form.Group className="mb-2">
+        <Form.Group className="mb-2 mt-2">
           <Form.Label>Articolo o pagina</Form.Label>
           <Form.Control
             as="select"
@@ -88,7 +89,7 @@ const AddPost = () => {
           Invia
         </Button>
       </Form>
-    </>
+    </Container>
   );
 };
 

@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import AddPost from './components/AddPost';
-import Navbar from './components/Navbar';
+import NavbarComponent from './components/NavbarComponent';
 import PostDetails from './components/PostDetails';
 import Edit from './components/Edit';
 
 function App() {
     return (
         <BrowserRouter>
-            <Navbar />
+            <NavbarComponent />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/addpost" element={<AddPost />} />

@@ -92,10 +92,6 @@ const Edit = () => {
   };
   useEffect(() => {
     fetchObj();
-    // setNewTitle(post.title.rendered);
-    // setNewContent(post.content.rendered);
-    // console.log('newTitle', newTitle)
-    // console.log('newContent', newContent)
   }, [obj]);
 
   if (post) {

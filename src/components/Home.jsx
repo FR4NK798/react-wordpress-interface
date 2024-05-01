@@ -5,8 +5,10 @@ import { Link } from "react-router-dom/dist";
 
 import { authString } from "../constants.js";
 
+import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 const Home = () => {
   // articoli
@@ -112,15 +114,17 @@ const Home = () => {
   };
 
   return (
-    <>
+
+    <Container>
       <Row>
         <Col>
+        <p className="fs-3">Articoli</p>
           <ul>
             {posts.map((post) => (
               <li key={post.id}>
                 <Link to={`/posts/${post.id}`}>{post.title.rendered}</Link>
-                <button onClick={() => deletePost(post.id)}>Elimina</button>
-                <Link to={`/edit/${post.id}`}>Modifica</Link>
+                <Button variant="danger" onClick={() => deletePost(post.id)}>Elimina</Button>
+                <Link to={`/edit/${post.id}`}> <Button variant="primary">Modifica</Button></Link>
               </li>
             ))}
           </ul>
@@ -165,12 +169,13 @@ const Home = () => {
       </Row>
       <Row>
         <Col>
+        <p className="fs-3">Pagine</p>
         <ul>
             {pages.map((pagina) => (
               <li key={pagina.id}>
-                <Link to={`/posts/${pagina.id}`}>{pagina.title.rendered}</Link>
-                <button onClick={() => deletePages(pagina.id)}>Elimina</button>
-                <Link to={`/edit/${pagina.id}`}>Modifica</Link>
+                <Link to={`/posts/${pagina.id}`}><div className="btn">{pagina.title.rendered}</div></Link>
+                <Button variant="danger" onClick={() => deletePages(pagina.id)}>Elimina</Button>
+                <Link to={`/edit/${pagina.id}`}> <Button variant="primary">Modifica</Button></Link>
               </li>
             ))}
           </ul>
@@ -213,7 +218,9 @@ const Home = () => {
           </ul>
         </Col>
       </Row>
-    </>
+      </Container>
+
+
   );
 };
 
