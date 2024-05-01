@@ -65,8 +65,8 @@ const Edit = () => {
             console.log("oggetto", obj);
             console.log("titolo", data.title.rendered);
             console.log("content", data.content.rendered);
-            setNewTitle(data.title.rendered)
-            setNewContent(data.content.rendered)
+            setNewTitle(data.title.rendered);
+            setNewContent(data.content.rendered);
           });
       } else {
         let response = await fetch(`${baseApiPage}/${id}`);
@@ -82,8 +82,8 @@ const Edit = () => {
             setPost(data);
             console.log("titolo", data.title.rendered);
             console.log("content", data.content.rendered);
-            setNewTitle(data.title.rendered)
-            setNewContent(data.content.rendered)
+            setNewTitle(data.title.rendered);
+            setNewContent(data.content.rendered);
           });
       }
     } catch (error) {
